@@ -12,3 +12,4 @@ C:\dev\playersGuide\The Fountain of Objects\obj\Debug\net8.0\refint\The Fountain
 C:\dev\playersGuide\The Fountain of Objects\obj\Debug\net8.0\The Fountain of Objects.pdb
 C:\dev\playersGuide\The Fountain of Objects\obj\Debug\net8.0\The Fountain of Objects.genruntimeconfig.cache
 C:\dev\playersGuide\The Fountain of Objects\obj\Debug\net8.0\ref\The Fountain of Objects.dll
+C:\dev\playersGuide\The Fountain of Objects\obj\Debug\net8.0\The Fountain of Objects.sourcelink.json

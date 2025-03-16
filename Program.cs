@@ -14,13 +14,14 @@
 
     public class Game
     {
-        private Grid Grid;
-        private Position position = new(0, 0); // Generate starting position
+        readonly private Grid _grid; // Changed to an immutable field.
+        private Position _position;
         private bool fountainOfObjects = false; // The Fountain is de-activated at the start of the game.
 
         public Game(int rows, int columns)
         {
-            Grid = new Grid(rows, columns);
+            _grid = new Grid(rows, columns);
+            _position = new(0, 0, _grid); // Player starts at the entrance. Added Grid parameter to allow Position to finds it's own position on the Grid.
         }
 
         public void Play()
@@ -29,10 +30,10 @@
             {
                 RoomState();
 
-                while (true) // Player action loop.
+                while (true) // Handles user input and the player's position on the grid.
                 {
                     // First present the choice to activate the Fountain if in the correct room.
-                    if (Grid.GetRoom(position.Row, position.Column) == Room.Fountain && !fountainOfObjects)
+                    if (_position.CurrentRoom == Room.Fountain && !fountainOfObjects)
                     {
                         ActivateFountainChoice();
                     }
@@ -48,10 +49,10 @@
                     };
 
                     // Prevents player from going outside of the grid.
-                    if (!CheckLegalMovement(input)) Console.WriteLine("\nYou can't move there!");
+                    if (!CheckLegalMove(input)) Console.WriteLine("\nYou can't move there!");
                     else
                     {
-                        Movement(input);
+                        _position.Move(input);
                         break;
                     }
                 }
@@ -59,22 +60,24 @@
                 if (WinCheck()) break; // The player must turn on the Fountain of Objects and return to the Entrance.
             }
 
-            bool CheckLegalMovement(Direction direction)
+            bool CheckLegalMove(Direction direction)
             {
-                if (direction == Direction.North && position.Row == 0) return false; // Cannot move north to row -1
-                if (direction == Direction.South && position.Row == 3) return false; // Cannot move south to row 4
-                if (direction == Direction.East && position.Column == 3) return false; // Cannot move east to column 4
-                if (direction == Direction.West && position.Column == 0) return false; // Cannot move west to column -1
+                return direction switch
+                {
+                    // Updated to a switch statement and based on _grid.Row and _grid.Column (scalable)
+                    Direction.North => _position.Row > 0,
+                    Direction.South => _position.Row < _grid.Row - 1,
+                    Direction.East => _position.Column < _grid.Column - 1,
+                    Direction.West => _position.Column > 0,
+                    _ => false
+                };
 
-                return true;
-            }
-
-            void Movement(Direction direction)
-            {
-                if (direction == Direction.North) position.Row--;
-                if (direction == Direction.South) position.Row++;
-                if (direction == Direction.East) position.Column++;
-                if (direction == Direction.West) position.Column--;
+                // OLD CODE
+                //if (direction == Direction.North && position.Row == 0) return false; // Cannot move north to row -1
+                //if (direction == Direction.South && position.Row == 3) return false; // Cannot move south to row 4
+                //if (direction == Direction.East && position.Column == 3) return false; // Cannot move east to column 4
+                //if (direction == Direction.West && position.Column == 0) return false; // Cannot move west to column -1
+                //return true;
             }
 
             void ActivateFountainChoice()
@@ -96,14 +99,14 @@
 
         private void Intro()
         {
-            // Play intro
+            // TO-DO: intro text to the game.
         }
 
         private void RoomState()
         {
             Console.WriteLine("\n--------------------------------------------------");
-            Console.WriteLine($"You are in the room at (Row={position.Row}, Column={position.Column})");
-            Sense(Grid.GetRoom(position.Row, position.Column)); // Hear or see what is in the room.
+            Console.WriteLine($"You are in the room at (Row={_position.Row}, Column={_position.Column})");
+            Sense(_position.CurrentRoom); // Hear or see what is in the room.
         }
 
         private void Sense(Room room)
@@ -115,9 +118,9 @@
 
         private bool WinCheck()
         {
-            if (Grid.GetRoom(position.Row, position.Column) == Room.Entrance && fountainOfObjects == true)
+            if (_position.CurrentRoom == Room.Entrance && fountainOfObjects == true)
             {
-                Console.WriteLine("\nYou managed to turn on the Fountain of Objects and return safely! You win!");
+                Console.WriteLine("\nThe Fountain of Objects has been reactivated, and you have escaped with your life!\nYou win!");
                 return true;
             }
             else return false;
@@ -149,13 +152,31 @@
 
     public class Position
     {
-        public int Row { get; set; }
-        public int Column { get; set; }
+        public int Row { get; private set; }
+        public int Column { get; private set; }
+        private readonly Grid _grid;
 
-        public Position(int x, int y)
+        public Position(int x, int y, Grid grid)
         {
             Row = x;
             Column = y;
+            _grid = grid;
+        }
+
+        public Room CurrentRoom => _grid.GetRoom(Row, Column);
+
+        public void Move(Direction direction)
+        {
+            // Updated to a switch statement. Formatted to a single line, looks cleaner this way.
+            // Moved to Position class for better encapsulation.
+            // Game doesn't need to know HOW the movement works, only that it can tell Position to change.
+            switch (direction)
+            {
+                case Direction.North: Row--; break;
+                case Direction.South: Row++; break;
+                case Direction.East: Column++; break;
+                case Direction.West: Column--; break;
+            }
         }
     }
 
