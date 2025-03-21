@@ -32,8 +32,6 @@
 
                 while (true) // Handles user input and the player's position on the grid.
                 {
-                   
-
                     ColouredText.Write("Which way do you want to go? (move north/south/east/west, or enable fountain) ", TextType.Input);
 
                     PlayerAction input = Console.ReadLine() switch
@@ -47,7 +45,7 @@
 
                     // Prevents player from going outside of the grid.
                     if (input == PlayerAction.EnableFountain) ActivateFountain();
-                    else if (!CheckLegalMove(input)) ColouredText.WriteLine("\nYou can't do that!", TextType.Descriptive);
+                    else if (!_position.LegalMove(input)) ColouredText.WriteLine("\nYou can't do that!", TextType.Descriptive);
                     else
                     {
                         _position.Move(input);
@@ -56,19 +54,6 @@
                 }
 
                 if (WinCheck()) break; // The player must turn on the Fountain of Objects and return to the Entrance.
-            }
-
-            bool CheckLegalMove(PlayerAction direction)
-            {
-                return direction switch
-                {
-                    // Updated to a switch statement and based on _grid.Row and _grid.Column (scalable)
-                    PlayerAction.MoveNorth => _position.Row > 0,
-                    PlayerAction.MoveSouth => _position.Row < _grid.Row - 1,
-                    PlayerAction.MoveEast => _position.Column < _grid.Column - 1,
-                    PlayerAction.MoveWest => _position.Column > 0,
-                    _ => false
-                };
             }
 
             void ActivateFountain()
@@ -156,6 +141,19 @@
         }
 
         public Room CurrentRoom => _grid.GetRoom(Row, Column);
+
+        public bool LegalMove(PlayerAction direction)
+        {
+            return direction switch
+            {
+                // Updated to a switch statement and based on _grid.Row and _grid.Column (scalable).
+                PlayerAction.MoveNorth => Row > 0,
+                PlayerAction.MoveSouth => Row < _grid.Row - 1,
+                PlayerAction.MoveEast => Column < _grid.Column - 1,
+                PlayerAction.MoveWest => Column > 0,
+                _ => false
+            };
+        }
 
         public void Move(PlayerAction direction)
         {

@@ -5,9 +5,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{10022545-6602-4659-AF57-E27CAE032250}|The Fountain of Objects.csproj|c:\\dev\\playersguide\\the fountain of objects\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{10022545-6602-4659-AF57-E27CAE032250}|The Fountain of Objects.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\dev\\playersGuide\\The Old Robot\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -17,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -29,26 +26,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\dev\\playersGuide\\The Old Robot\\Program.cs",
-              "RelativeDocumentMoniker": "..\\The Old Robot\\Program.cs",
-              "ToolTip": "C:\\dev\\playersGuide\\The Old Robot\\Program.cs",
-              "RelativeToolTip": "..\\The Old Robot\\Program.cs",
-              "ViewState": "AgIAADYAAAAAAAAAAAAAADoAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-17T13:47:49.5Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\dev\\playersGuide\\The Fountain of Objects\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\dev\\playersGuide\\The Fountain of Objects\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAADYAAAAAAAAAAAAAAEMAAABAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-16T09:36:40.998Z",
               "EditorCaption": ""
